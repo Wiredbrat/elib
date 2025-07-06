@@ -1,10 +1,10 @@
-import { User } from "../models/user.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import ApiError from "../utils/errorHandler";
-import ApiResponse from "../utils/responseHandler";
+import { User } from "../models/user.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import ApiError from "../utils/errorHandler.js";
+import ApiResponse from "../utils/responseHandler.js";
 
 const userRegister = asyncHandler(async(req, res) => {
-  const { username, password, fullName, email } = req.body
+  const { password, username, fullName, email } = req.body
 
   if(!username) {
     throw new ApiError(400, 'username is required') 
@@ -22,35 +22,37 @@ const userRegister = asyncHandler(async(req, res) => {
     throw new ApiError(400, "fullname is required")
   }
 
-  const existingEmail = await User.findOne(email)
+  const existingEmail = await User.findOne({email})
   
   if(existingEmail) {
-    throw ApiError(401, 'User with Given Email Exists')
+    throw new ApiError(401, 'User with Given Email Exists')
   }
   
-  const existingUsername = await User.findOne(username)
+  const existingUsername = await User.findOne({username})
 
   if(existingUsername) {
-    throw ApiError(401, 'User With Given Username Exists')
+    throw new ApiError(401, 'User With Given Username Exists')
   }  
 
-
   const user = await User.create({
-    username: username,
-    fullName: fullName,
-    email: email,
-    password: password,
-    refreshToken,
-    avatar: avatar? avatar : null,
+    username,
+    fullName: fullName.toLowerCase(),
+    email,
+    password,
+    refreshToken: null,
+    avatar: null,
     books: []
   })
 
-  const newUser = user.findById(user._id).select('-password, -refreshToken')
+  const newUser = await User.findById(user._id).select('-password, -refreshToken')
 
-  return res
-  .status(201)
-  .json(
-    new ApiResponse(200, )
+  if(!newUser) {
+    throw new ApiError(503, 'error while creating user')
+  }
+
+  console.log(newUser)
+  return res.status(201).json(
+    new ApiResponse(200, newUser, 'user created successfully')
   )
 })
 

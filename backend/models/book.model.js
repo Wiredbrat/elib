@@ -16,7 +16,8 @@ const bookSchema = new Schema({
   category: [{
     type: String,
     lowercase: true
-  }]
+  }],
+  
 }, {timestamps: true})
 
 export const Book = mongoose.model('Book', bookSchema)

@@ -5,8 +5,8 @@ class ApiResponse {
     message = 'Success',
   ) {
     this.statusCode = statusCode
-    this.message = message
     this.data = data
+    this.message = message
   }
 }
 
