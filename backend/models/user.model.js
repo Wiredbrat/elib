@@ -34,7 +34,6 @@ const userSchema = new Schema({
   }]
 }, {timestamps: true})
 
-export const User = mongoose.model('User', userSchema)
 
 //function for encrypting password
 const encryptPassword = async (password) => {  
@@ -48,13 +47,15 @@ const encryptPassword = async (password) => {
 }
 
 //middleware for encrypting password
-userSchema.pre('save', function(next) {
-  if(this.isModified(password)) {
-    encryptPassword(this.password)
+userSchema.pre('save', async function(next) {
+try {
+    if(this.isModified('password')) {
+      this.password = await encryptPassword(this.password)
+    }
     next()
-  }else{
-    next()
-  }
+} catch (error) {
+  next(new ApiError(401, 'password encryption failed', error))
+}
 })
 
 //function for comparing encrypted password and normal password for verification:
@@ -86,3 +87,5 @@ userSchema.methods.generateRefreshToken = async function() {
     expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
   }
 }
+
+export const User = mongoose.model('User', userSchema)
