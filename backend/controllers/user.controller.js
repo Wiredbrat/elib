@@ -56,6 +56,41 @@ const userRegister = asyncHandler(async(req, res) => {
   )
 })
 
+const userLogin = asyncHandler(async(req, res) => {
+// first check if the user exist 
+//check for password 
+//if password is correct then generate accesstoken and refreshtoken
+//save it into cookies or header
+//check for errors at all points 
+//if no errors found send response
+
+  const {username, email, password } = req.body
+
+  if(!username || !email) {
+    throw new ApiError(400, 'Enter valid username or password')
+  }
+  const existingUser = await User.findOne({
+    $or: [ {username}, {email} ]
+  })
+
+  if(!existingUser) {
+    throw new ApiError(404, 'User not found')
+  }
+
+  const isPasswordValid = existingUser.isPasswordCorrect(password)
+
+  if(!isPasswordValid) {
+    throw new ApiError(401, "Incorrect password")
+  }
+
+  const accessToken = existingUser.generateAccessToken()
+  const refreshToken = existingUser.generateRefreshToken()
+
+  return res
+  .status(200)
+  .cookie(accessToken, refreshToken)
+
+})
 
 export { 
   userRegister 
