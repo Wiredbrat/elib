@@ -67,7 +67,7 @@ const userLogin = asyncHandler(async(req, res) => {
   const {username, email, password } = req.body
 
   if(!username || !email) {
-    throw new ApiError(400, 'Enter valid username or password')
+    throw new ApiError(400, 'Enter valid username or email')
   }
   const existingUser = await User.findOne({
     $or: [ {username}, {email} ]
@@ -85,13 +85,21 @@ const userLogin = asyncHandler(async(req, res) => {
 
   const accessToken = existingUser.generateAccessToken()
   const refreshToken = existingUser.generateRefreshToken()
-
+  
+  existingUser.refreshToken = refreshToken
+  existingUser.save({validateBeforeSave: false})
+  
+  if(!accessToken || !refreshToken) {
+    throw new ApiError(400, 'error while generating tokens')
+  }
   return res
   .status(200)
-  .cookie(accessToken, refreshToken)
-
+  .cookie("accessToken", accessToken, {httpOnly: true, secure: true})
+  .cookie("refreshToken", refreshToken, {httpOnly: true, secure: true})
+  .json(200, existingUser, 'user login successfully')
 })
 
 export { 
-  userRegister 
+  userRegister,
+  userLogin
 }

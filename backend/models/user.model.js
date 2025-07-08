@@ -70,22 +70,22 @@ userSchema.methods.generateAccessToken = async function() {
     username: this.username,
     fullName: this.fullName,
     email: this.email
-  }),
+  },
   process.env.ACCESS_TOKEN_SECRET,
   {
-    expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-  }
+    expiresIn: process.env.ACCESS_TOKEN_EXPIRY || '2d',
+  })
 }
 
 //function to create refreshToken
 userSchema.methods.generateRefreshToken = async function() {
   return jwt.sign({
     _id: this._id,
-  }),
+  },
   process.env.REFRESH_TOKEN_SECRET,
   {
-    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
-  }
+    expiresIn: process.env.REFRESH_TOKEN_SECRET || '15d',
+  })
 }
 
 export const User = mongoose.model('User', userSchema)
