@@ -119,8 +119,45 @@ const userLogout = asyncHandler(async (req, res) => {
   .json(new ApiResponse(200, 'user logged out successfully'))
 })
 
+// chnage password
+const changePassword = asyncHandler(async(req, res) => {
+  const {oldPassword, newPassword, confirmPassword} = req.body
+
+  if([oldPassword, newPassword, confirmPassword].some(password => password.trim() === '')) {
+    throw new ApiError(400, 'fill all given fields')
+  }
+
+  if(newPassword !== confirmPassword) {
+    throw new ApiError(401, 'new and confirm passwords does not match')
+  }
+   
+  const loginUser = req.user
+
+  const user = await User.findById(loginUser._id)
+
+  if(!user) {
+    throw new ApiError(401, 'user not found')
+  }
+
+  const verifyPassword = await user.isPasswordCorrect(oldPassword)
+
+  if(!verifyPassword) {
+    throw new ApiError(401, 'password is incorrect')
+  }
+
+  user.password = newPassword
+  user.save({new:true})
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, null, 'password changed Sucessfully'))
+
+})
+
 export { 
   userRegister,
   userLogin,
-  userLogout
+  userLogout,
+  changePassword,
+
 }

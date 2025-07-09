@@ -20,7 +20,7 @@ const validateToken = asyncHandler(async(req, _, next) => {
     throw new ApiError(400, 'error while getting user data from cookies')
   }
 
-  const user = await User.findById(decodedToken?._id)
+  const user = await User.findById(decodedToken?._id).select('-password -refreshToken')
 
   if(!user) {
     throw new ApiError(404, 'no user found')
