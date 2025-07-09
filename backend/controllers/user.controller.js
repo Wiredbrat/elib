@@ -3,6 +3,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiError from "../utils/errorHandler.js";
 import ApiResponse from "../utils/responseHandler.js";
 
+// register user
 const userRegister = asyncHandler(async(req, res) => {
   const { password, username, fullName, email } = req.body
 
@@ -44,25 +45,21 @@ const userRegister = asyncHandler(async(req, res) => {
     books: []
   })
 
-  const newUser = await User.findById(user._id).select('-password, -refreshToken')
+  const newUser = await User.findById(user._id).select('-password -refreshToken')
 
   if(!newUser) {
     throw new ApiError(503, 'error while creating user')
   }
 
-  console.log(newUser)
+  // console.log(newUser)
   return res.status(201).json(
     new ApiResponse(200, newUser, 'user created successfully')
   )
 })
 
+
+// login user
 const userLogin = asyncHandler(async(req, res) => {
-// first check if the user exist 
-//check for password 
-//if password is correct then generate accesstoken and refreshtoken
-//save it into cookies or header
-//check for errors at all points 
-//if no errors found send response
 
   const {username, email, password } = req.body
 
@@ -83,23 +80,47 @@ const userLogin = asyncHandler(async(req, res) => {
     throw new ApiError(401, "Incorrect password")
   }
 
-  const accessToken = existingUser.generateAccessToken()
-  const refreshToken = existingUser.generateRefreshToken()
+  const newAccessToken = await existingUser.generateAccessToken()
+  const newRefreshToken = await existingUser.generateRefreshToken()
   
-  existingUser.refreshToken = refreshToken
-  existingUser.save({validateBeforeSave: false})
+  // existingUser.refreshToken = newRefreshToken
+  // existingUser.save({validateBeforeSave: false, new:true})
   
-  if(!accessToken || !refreshToken) {
+  if(!newAccessToken || !newRefreshToken) {
     throw new ApiError(400, 'error while generating tokens')
   }
+  const user = await User.findByIdAndUpdate(existingUser._id, {refreshToken: newRefreshToken}, {new:true, runValidators: false}).select('-password -refreshToken')
+
+  const options = {httpOnly: true, secure: true}
+
   return res
   .status(200)
-  .cookie("accessToken", accessToken, {httpOnly: true, secure: true})
-  .cookie("refreshToken", refreshToken, {httpOnly: true, secure: true})
-  .json(200, existingUser, 'user login successfully')
+  .cookie("accessToken", newAccessToken, options)
+  .cookie("refreshToken", newRefreshToken, options)
+  .json(new ApiResponse(200, user, 'user login successfully'))
+})
+
+// logout user
+const userLogout = asyncHandler(async (req, res) => {
+  const loginUser = req?.user
+
+  if(!loginUser) {
+    throw new ApiError(401, 'user not fetched properly')
+  }
+
+  loginUser.refreshToken = null
+  loginUser.save({new:true})
+  
+  const options = {httpOnly: true, secure: true}
+
+  return res
+  .cookie("accessToken", options)
+  .cookie("refreshToken", options)
+  .json(new ApiResponse(200, 'user logged out successfully'))
 })
 
 export { 
   userRegister,
-  userLogin
+  userLogin,
+  userLogout
 }
