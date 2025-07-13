@@ -4,6 +4,12 @@ const bookSchema = new Schema({
   bookName: {
     type: String,
   },
+  author: {
+    type: String,
+  },
+  publishYear: {
+    type: Number
+  },
   status:{
     type: String,
     enum: ['Reading', 'Plan to read', 'On hold', 'Completed', 'Dropped'],

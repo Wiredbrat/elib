@@ -88,4 +88,6 @@ userSchema.methods.generateRefreshToken = async function() {
   })
 }
 
+// add user data updation functions with option to add profile image //
+
 export const User = mongoose.model('User', userSchema)
