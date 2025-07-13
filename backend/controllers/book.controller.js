@@ -32,6 +32,28 @@ const addBookToCollection = asyncHandler(async(req, res) => {
   .json(new ApiResponse(200, book, 'book added to user collection'))
 })
 
+const updateBookStatus = asyncHandler(async(req, res) => {
+  const {status} = req.status
+  const {bookId} = req.bookId
+
+  if(!status) {
+    throw new ApiError(400, 'not a valid status')
+  }
+
+  const updatedStatus = await Book.findOneAndUpdate(
+    bookId, 
+    {$set: {status: status}}, 
+    {new: true, runValidators: true}
+  )
+   
+  if(!updatedStatus) {
+    throw new ApiError(400, 'error while updating status')
+  }
+  return res
+  .status(200)
+  .json(new ApiResponse(200, updatedStatus, 'status updated successfully'))
+})
+
 // const createCategory = asyncHandler(async(req, res) => {
 
 // })
