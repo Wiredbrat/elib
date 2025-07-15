@@ -1,7 +1,7 @@
-import { Book } from "../models/book.model";
-import { asyncHandler } from "../utils/asyncHandler";
-import ApiError from "../utils/errorHandler";
-import ApiResponse from "../utils/responseHandler";
+import { Book } from "../models/book.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import ApiError from "../utils/errorHandler.js";
+import ApiResponse from "../utils/responseHandler.js";
 
 const addBookToCollection = asyncHandler(async(req, res) => {
 
@@ -58,4 +58,4 @@ const updateBookStatus = asyncHandler(async(req, res) => {
 
 // })
 
-export { addBookToCollection }
+export { addBookToCollection, updateBookStatus }

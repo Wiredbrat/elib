@@ -102,21 +102,29 @@ const userLogin = asyncHandler(async(req, res) => {
 
 // logout user
 const userLogout = asyncHandler(async (req, res) => {
-  const loginUser = req?.user
+  // method 1
+  // const loginUser = req?.user
 
-  if(!loginUser) {
-    throw new ApiError(401, 'user not fetched properly')
-  }
+  // if(!loginUser) {
+  //   throw new ApiError(401, 'user not fetched properly')
+  // }
 
-  loginUser.refreshToken = null
-  loginUser.save({new:true})
+  // loginUser.refreshToken = null
+  // await loginUser.save()
   
-  const options = {httpOnly: true, secure: true}
+  // method 2
+  await User.findByIdAndUpdate(
+    req.user?._id,
+    {$unset: { refreshToken: 1 }},
+    {new: true}
+  )
+
+  const options = {httpOnly: true, secure: true, expires: new Date(0)}
 
   return res
-  .cookie("accessToken", options)
-  .cookie("refreshToken", options)
-  .json(new ApiResponse(200, 'user logged out successfully'))
+  .cookie("accessToken", '', options)
+  .cookie("refreshToken", '',options)
+  .json(new ApiResponse(200, {}, 'user logged out successfully'))
 })
 
 // chnage password
@@ -154,7 +162,9 @@ const changePassword = asyncHandler(async(req, res) => {
 
 })
 
+const forgotPassword = asyncHandler(async(req, res) => {
 
+})
 
 export { 
   userRegister,
