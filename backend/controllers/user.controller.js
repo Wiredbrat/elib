@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import ApiError from "../utils/errorHandler.js";
@@ -56,7 +57,6 @@ const userRegister = asyncHandler(async(req, res) => {
     new ApiResponse(200, newUser, 'user created successfully')
   )
 })
-
 
 // login user
 const userLogin = asyncHandler(async(req, res) => {
@@ -162,7 +162,35 @@ const changePassword = asyncHandler(async(req, res) => {
 
 })
 
-const forgotPassword = asyncHandler(async(req, res) => {
+const getUser = asyncHandler(async(req, res) => {
+  const user = await User.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(req.user._id)
+      }
+    },
+    {
+    $lookup: {
+      from: 'books',
+      localField: 'books',
+      foreignField: '_id',
+      as: 'list',
+      pipeline:[
+        {
+          $project: {
+            bookName: 1,
+            author: 1,
+            status: 1
+          }
+        }
+      ]
+    }
+    }
+  ])
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, user, 'user data feched successfully'))
 
 })
 
@@ -171,4 +199,5 @@ export {
   userLogin,
   userLogout,
   changePassword,
+  getUser
 }
