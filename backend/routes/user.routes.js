@@ -1,17 +1,18 @@
 import Router from 'express'
-import { userLogin, userRegister, userLogout, changePassword } from '../controllers/user.controller.js'
+import { userLogin, userRegister, userLogout, changePassword, getUser, deleteUserAccount } from '../controllers/user.controller.js'
 import { validateToken } from '../middlewares/auth.middleware.js'
-import { addBookToCollection } from '../controllers/book.controller.js'
+
 
 const router = Router()
 
+//route for user registration and login
 router.route('/register').post(userRegister)
+router.route('/login').post(userLogin)
 
 //secured Routes
-router.route('/login').post(userLogin)
 router.route('/logout').post(validateToken ,userLogout)
 router.route('/change-password').post(validateToken, changePassword)
+router.route('/get-user').get(validateToken, getUser)
+router.route('/delete-account').post(validateToken, deleteUserAccount)
 
-//routes for crud operations on books collection
-router.route('/add-book').post(validateToken, addBookToCollection )
 export { router }
