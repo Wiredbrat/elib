@@ -5,17 +5,16 @@ const bookSchema = new Schema({
     type: String,
   },
   author: {
-    type: String,
+    type: Array,
   },
   publishYear: {
     type: Number
   },
-  status:{
-    type: String,
-    enum: ['Reading', 'Plan to read', 'On hold', 'Completed', 'Dropped'],
-    required: true,
-  },
   bookId: {
+    type: String,
+    required: true
+  },
+  bookCover:{
     type: String,
     required: true
   },
