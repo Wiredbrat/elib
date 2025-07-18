@@ -113,6 +113,7 @@ const userLogout = asyncHandler(async (req, res) => {
   // await loginUser.save()
   
   // method 2
+  console.log(req.user)
   await User.findByIdAndUpdate(
     req.user?._id,
     {$unset: { refreshToken: 1 }},
@@ -163,30 +164,44 @@ const changePassword = asyncHandler(async(req, res) => {
 })
 
 const getUser = asyncHandler(async(req, res) => {
+  console.log(req.user._id)
   const user = await User.aggregate([
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(req.user._id)
+        _id: req.user._id
       }
     },
     {
-    $lookup: {
-      from: 'books',
-      localField: 'books',
-      foreignField: '_id',
-      as: 'list',
-      pipeline:[
-        {
-          $project: {
-            bookName: 1,
-            author: 1,
-            status: 1
-          }
-        }
-      ]
-    }
+      $unwind: '$books'
+    },
+    {
+      $lookup: {
+        from: 'books',
+        localField: 'books.book',
+        foreignField: '_id',
+        as: 'bookData',
+      }
+    },
+    {
+      $unwind: '$bookData'
+    },
+    {
+      $project: {
+        _id: 1,
+        title: '$bookData.bookName',
+        author: '$bookData.author',
+        cover: '$bookData.bookCover',
+        publishYear: '$bookData.publishYear',
+        status: '$books.status',  
+        bookId: '$bookData._id'
+      }
     }
   ])
+
+  console.log(user)
+  if(!user) {
+    throw new ApiError(500, 'Error while fetching user')
+  }
 
   return res
   .status(200)
@@ -194,10 +209,24 @@ const getUser = asyncHandler(async(req, res) => {
 
 })
 
+const deleteUserAccount = asyncHandler(async(req, res) => {
+
+  const user = await User.findByIdAndDelete(req.user._id)
+
+  if(!user) {
+    throw new ApiError(500, 'Error While Deleting User Account')
+  }
+
+  res
+  .status(200)
+  .json(new ApiResponse(200, user, 'User Account Deleted Successfully'))
+})
+
 export { 
   userRegister,
   userLogin,
   userLogout,
   changePassword,
-  getUser
+  getUser,
+  deleteUserAccount
 }
