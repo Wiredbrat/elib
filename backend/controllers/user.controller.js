@@ -228,6 +228,6 @@ export {
   userLogin,
   userLogout,
   changePassword,
-  getUser,
+  getUserCollection,
   deleteUserAccount
 }
