@@ -17,7 +17,7 @@ const fetchDataFromAPI = asyncHandler(async(req, res, next) => {
     // this is response for checking 
     return res
     .status(200)
-    .json(new ApiResponse(200, newData.docs[0], 'data fetched successfully'))
+    .json(new ApiResponse(200, newData.docs, 'data fetched successfully'))
 })
 
 export { fetchDataFromAPI }

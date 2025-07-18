@@ -163,7 +163,8 @@ const changePassword = asyncHandler(async(req, res) => {
 
 })
 
-const getUser = asyncHandler(async(req, res) => {
+// get user collection data 
+const getUserCollection = asyncHandler(async(req, res) => {
   console.log(req.user._id)
   const user = await User.aggregate([
     {
