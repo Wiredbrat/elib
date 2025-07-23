@@ -1,2 +1,15 @@
-@import 'tailwindcss';
 
+@import 'tailwindcss';
+@theme{
+  --font-inter: 'Inter', sans-serif;
+  --font-merriweather: 'Merriweather', serif;
+  --font-lora: 'Lora', serif;
+  --font-sans3: 'Source Sans 3', sans-serif;
+}
+
+:root {
+  --primary: #fff;
+  --secondary: #333;
+  --button: #1374fb;
+
+}
