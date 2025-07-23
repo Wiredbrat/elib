@@ -60,7 +60,7 @@ const sendOTP = asyncHandler(async(req, res) => {
 
     return res
     .status(200)
-    .json(new ApiResponse(200, info, 'email sent sucessfully'))
+    .json(new ApiResponse(200, info, 'OTP sent sucessfully'))
   })
 
 })
