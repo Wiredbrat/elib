@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import userRoutes from '../api_routes/user.routes'
 import { motion, AnimatePresence } from "motion/react"
-import { Link, useNavigate } from 'react-router-dom'
+import { replace, useNavigate } from 'react-router-dom'
 
 
 const LoginRegisterForm = () => {
@@ -21,23 +21,34 @@ const LoginRegisterForm = () => {
 
   const onSubmitRegistrationForm = async(data) => {
     setAuthData(data)
-    // console.log(authData)
 
     try {
     const response = await axios.post(userRoutes.otp, data)
     if(response.data.statusCode === 200) {
-      navigate('/otp')
+      navigate('/otp', )
     }else {
       alert('otp not sent, please retry')
     }
-
+    
     // console.log(response.data)
     } catch (error) {
       console.log('Error:' ,error)
     }
   } 
 
-  const onSubmitLoginForm = async() => {}
+  const onSubmitLoginForm = async(data) => {
+    try {
+      const respone = axios.post(userRoutes.login, data)
+
+      if((await respone).data.statusCode === 200) {
+        navigate('/dashboard', {replace: true})
+        return
+      }
+    } catch (error) {
+      console.log(error)
+      navigate('/404')      
+    }
+  }
 
   const [isRegister, setIsRegister] = useState(false)
   return (
