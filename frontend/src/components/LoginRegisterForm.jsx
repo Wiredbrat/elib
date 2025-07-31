@@ -2,13 +2,13 @@ import { useContext, useState} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
-import userRoutes from '../api_routes/user.routes'
+import userRoutes from '../routes/user.routes'
 import { motion, AnimatePresence } from "motion/react"
-import { replace, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 const LoginRegisterForm = () => {
-  const {authData, setAuthData} = useContext(AuthContext)
+  const {setAuthData} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
@@ -52,7 +52,7 @@ const LoginRegisterForm = () => {
 
   const [isRegister, setIsRegister] = useState(false)
   return (
-    <section>
+    <>
       <div className='h-screen w-full lg:w-[40%] flex flex-col relative items-center overflow-hidden py-4'>
         <div className='flex justify-end items-center gap-2 text-sm'>
           <p className='text-gray-600'>{isRegister? 'Already Registered?': `Don't have an account?`}</p>
@@ -188,7 +188,7 @@ const LoginRegisterForm = () => {
           </AnimatePresence>
         </div>
       </div>
-    </section>
+    </>
   )
 }
 
