@@ -1,16 +1,17 @@
 import { useContext, useState } from 'react'
 import './App.css'
 import { ThemeContext } from './context/ThemeContext'
-import LoginRegisterForm from './components/LoginRegisterForm'
-
+import { RouterProvider } from 'react-router-dom'
+import {router} from './layout/Layout.jsx'
 function App() {
   const [count, setCount] = useState(0)
   const {theme, setTheme} = useContext(ThemeContext)
+
+  
   return (
     <>
       <div className='font-inter'>
-
-        <LoginRegisterForm/>
+        <RouterProvider router={router}/>
       </div>
     </>
   )
