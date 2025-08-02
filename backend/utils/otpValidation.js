@@ -9,7 +9,7 @@ const sendOTP = asyncHandler(async(req, res) => {
   const { email } = req.body
 
   if(!email) {
-    throw ApiError(400, 'enter a valid email')
+    throw new ApiError(400, 'enter a valid email')
   }
 
   //otp-generator for generating otp
@@ -67,7 +67,6 @@ const sendOTP = asyncHandler(async(req, res) => {
 
 const verifyOTP = asyncHandler(async(req, res) => {
   const { otp, email } = req.body
-
   const otpMatch = await Otp.findOne({ email, otp })
   // console.log(otpMatch)
   if(!otpMatch) {
