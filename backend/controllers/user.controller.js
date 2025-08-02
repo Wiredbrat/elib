@@ -62,10 +62,11 @@ const userRegister = asyncHandler(async(req, res) => {
 const userLogin = asyncHandler(async(req, res) => {
 
   const {username, email, password } = req.body
-
-  if(!username || !email) {
+  console.log(req.body)
+  if(!username && !email) {
     throw new ApiError(400, 'Enter valid username or email')
   }
+
   const existingUser = await User.findOne({
     $or: [ {username}, {email} ]
   })
@@ -91,7 +92,7 @@ const userLogin = asyncHandler(async(req, res) => {
   }
   const user = await User.findByIdAndUpdate(existingUser._id, {refreshToken: newRefreshToken}, {new:true, runValidators: false}).select('-password -refreshToken')
 
-  const options = {httpOnly: true, secure: true}
+  const options = {httpOnly: true, secure: process.env.NODE_ENV === "production"}
 
   return res
   .status(200)
