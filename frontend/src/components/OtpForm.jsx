@@ -1,13 +1,16 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion } from 'motion/react'
-import useApi from '../hooks/useApi'
+import callApi from '../utils/callApi'
 import { AuthContext } from '../context/AuthContext'
 import userRoutes from '../routes/user.routes'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 function OtpForm() {
   const { authData} = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const {
     register,
@@ -17,31 +20,43 @@ function OtpForm() {
   } = useForm()
 
   const onSubmitOtp = async(data) => {
-    console.log("Submitted Data", data)
+    console.log(authData)
+    const sendData = {
+      email: authData.email,
+      otp: data.otp
+    }
+    try {
+      console.log("Submitted Data", data)
+      const response = await callApi(userRoutes.verifyOtp, sendData)
+      console.log(response.data)
+      
+      if(response.data?.statusCode === 200) {
+        toast.success('OTP Verified!', {position: 'bottom-center'})
+        const authResponse = await callApi(userRoutes.register, 'post', authData)
+        if(authResponse.data?.statusCode === 200) {
+          navigate('/login')
+        }else{
+          console.log('Server Error', authResponse.data?.error || 500)
+          navigate('/server-error')
+        }
 
-    const response = await useApi(userRoutes.verifyOtp, 'post', data)  
-
-    if(response.statusCode === 200) {
-      const response = await useApi(userRoutes.register, 'post', authData)
-
-      if(response.statusCode === 200) {
-        navigate('/login')
       }else{
-        console.log('Server Error', response.error)
-        navigate('/server-error')
+        toast.error('Invalid OTP!', {position: 'bottom-center'})
+        console.log('Server Error', response.data?.error || 500)
       }
 
-    }else{
-      console.log('Server Error', response.error)
-      navigate('/server-error')
+    } catch (error) {
+      console.log("error")
+      console.log(error)
     }
+    
   }
 
   return (
     <>
       <div className='flex justify-center items-center h-screen w-screen'>
         <motion.div
-          className='w-[25%] px-8 py-12 shadow-xl'
+          className='w-80%] md:w-3/4 lg:w-1/4 px-8 py-12 shadow-xl'
         >
           <p className='text-center my-6'>
             <span className='inline-block font-bold text-xl text-transparent bg-linear-to-r from-black to-gray-300 bg-clip-text'>
@@ -74,6 +89,7 @@ function OtpForm() {
           </form>
         </motion.div>
       </div>
+      <ToastContainer/>
     </>
   )
 }

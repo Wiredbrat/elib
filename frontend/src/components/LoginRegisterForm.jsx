@@ -1,10 +1,11 @@
-import { useContext, useState} from 'react'
+import { useContext, useEffect, useState} from 'react'
 import { AuthContext } from '../context/AuthContext'
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import userRoutes from '../routes/user.routes'
 import { motion, AnimatePresence } from "motion/react"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 
 
 const LoginRegisterForm = () => {
@@ -25,9 +26,10 @@ const LoginRegisterForm = () => {
     try {
     const response = await axios.post(userRoutes.otp, data)
     if(response.data.statusCode === 200) {
+      toast.success('OTP Sent!', {position: 'bottom-center'})
       navigate('/otp', )
     }else {
-      alert('otp not sent, please retry')
+      toast.error('Something Went Wrong!', {position: 'bottom-center'})
     }
     
     // console.log(response.data)
@@ -36,24 +38,50 @@ const LoginRegisterForm = () => {
     }
   } 
 
-  const onSubmitLoginForm = async(data) => {
-    try {
-      const respone = axios.post(userRoutes.login, data)
+  const isEmail = (value) => {
+    // Simple regex to validate email
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  };
 
-      if((await respone).data.statusCode === 200) {
+  const onSubmitLoginForm = async(data) => {
+    const identifier = data.usernameOrEmail.trim()
+    const payload = isEmail(identifier)
+    ? {username: null, email: identifier, password: data.password}
+    : {username: identifier, email: null, password: data.password}
+    
+    console.log(payload.username)
+    try {
+      const response = await axios.post(userRoutes.login, payload)
+      console.log(response)
+      if(response.data?.statusCode === 200) {
+        toast.success('Welcome', {position: 'bottom-center'})
         navigate('/dashboard', {replace: true})
         return
+      }else{
+        toast.error('Invalid Credentials!', {position: 'bottom-center'})
       }
     } catch (error) {
       console.log(error)
-      navigate('/404')      
+      toast.error('Invalid Credentials', {position: 'bottom-center'})
     }
   }
+
+  useEffect(() => {
+    errors.usernameOrEmail?.type === 'required' && 
+    toast.error('Enter Username or Email', {position: 'bottom-right'})
+
+    errors.password?.type === 'required' && 
+    toast.error('Enter password', {position: 'bottom-right'})
+
+    return () => {
+      console.log('error handled')
+    }
+  }, [errors.usernameOrEmail, errors.password])
 
   const [isRegister, setIsRegister] = useState(false)
   return (
     <>
-      <div className='h-screen w-full lg:w-[40%] flex flex-col relative items-center overflow-hidden py-4'>
+      <div className='h-screen w-full flex flex-col relative items-center overflow-hidden py-4'>
         <div className='flex justify-end items-center gap-2 text-sm'>
           <p className='text-gray-600'>{isRegister? 'Already Registered?': `Don't have an account?`}</p>
           
@@ -66,7 +94,7 @@ const LoginRegisterForm = () => {
             {isRegister? 'Sign Up' : 'Sign In'}
         </motion.button>
         </div>
-        <div className='relative h-400px w-[90%] md:w-[70%] mx-auto'>
+        <div className='relative h-screen w-[90%] flex items-center '>
           <AnimatePresence initial={true} className="">
             {isRegister ? 
             <motion.div 
@@ -74,7 +102,7 @@ const LoginRegisterForm = () => {
               animate={{opacity:1, x: 0, scale: 1}}
               exit={{opacity: 0, x: -300, scale: 1}}
               key='registrationForm'
-              className='p-4 w-full absolute top-0 left-0'
+              className='p-4 w-full absolute top-0'
             >
 
               <p className='text-center my-6'>
@@ -138,7 +166,7 @@ const LoginRegisterForm = () => {
               animate={{opacity:1,  x: 0, scale: 1}}
               exit={{opacity: 0,  x: 300, scale: 1}}
               key='loginForm'
-              className='p-4 w-full absolute top-0 left-0'
+              className='p-4 w-full absolute top-0'
             >
               <p className='text-center my-6'>
                 <span className='inline-block font-bold text-xl text-transparent bg-linear-to-r from-black to-gray-300 bg-clip-text'>
@@ -154,9 +182,11 @@ const LoginRegisterForm = () => {
               >
                 <input 
                   type="text" {...register("usernameOrEmail", { required: true })} 
+                  aria-invalid={errors.usernameOrEmail ? 'true' : 'false'}
                   placeholder='Username or Email'
                   className='border border-gray-200 w-full px-3 py-4 rounded-xl outline-0 shadow'
                 />
+                
 
                 <div className='flex border border-gray-200 w-full px-3 py-4 rounded-xl outline-0 shadow select-none selection:bgt'>
                   <input 
@@ -182,11 +212,14 @@ const LoginRegisterForm = () => {
                   />
                 
               </form>
-              {/* <Link to=''>forgot password?</Link> */}
+              <p className='text-center my-5'>
+                <Link className="text-blue-600" to='/reset-password'>Forgot password?</Link>
+              </p>
             </motion.div>
           }
           </AnimatePresence>
         </div>
+        <ToastContainer/>
       </div>
     </>
   )
