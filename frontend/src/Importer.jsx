@@ -1,5 +1,6 @@
 import LoginRegisterForm from "./components/LoginRegisterForm";
 import OtpForm from "./components/OtpForm";
-import Login from "./pages/Login";
+import Searchbar from "./components/searchbar";
+import Sidebar from "./components/Sidebar";
 
-export { OtpForm, LoginRegisterForm, Login}
+export { OtpForm, LoginRegisterForm, Searchbar, Sidebar}

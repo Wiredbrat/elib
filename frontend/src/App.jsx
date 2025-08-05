@@ -10,7 +10,7 @@ function App() {
   
   return (
     <>
-      <div className='font-inter'>
+      <div className='font-inter bg-slate-200 h-screen w-full'>
         <RouterProvider router={router}/>
       </div>
     </>
