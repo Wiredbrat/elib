@@ -4,7 +4,7 @@ const ThemeContext = createContext(null)
 
 const ThemeProvider = ({children}) => {
   
-  const [theme, setTheme] = useState()
+  const [theme, setTheme] = useState('light')
    
   const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
   if(systemTheme) {
