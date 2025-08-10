@@ -7,9 +7,12 @@ import userRoutes from '../routes/user.routes'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import { ThemeContext } from '../context/ThemeContext'
+import '../index.css'
 
 function OtpForm() {
   const { authData} = useContext(AuthContext)
+  const { theme } = useContext(ThemeContext)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const {
@@ -54,7 +57,7 @@ function OtpForm() {
 
   return (
     <>
-      <div className='flex justify-center items-center h-screen w-screen'>
+      <div className={`flex justify-center items-center h-screen w-screen ${theme === 'dark' ? 'dark': ''}`}>
         <motion.div
           className='w-80%] md:w-3/4 lg:w-1/4 px-8 py-12 shadow-xl'
         >
