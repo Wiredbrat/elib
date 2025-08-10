@@ -45,11 +45,11 @@ function Books({category}) {
         </button>
       </div>
       <div className='w-full overflow-scroll scrollbar-hide'>
-        <div className='w-max lg:w-full flex xl:px-8 2xl:px-16'>
+        <div className='w-max lg:w-full flex xl:px-8 2xl:px-16 '>
           
         {books && books.map((book) => {
           return (
-            <div key={book.key} className='flex gap-1 w-1/5 items-start flex-col'>
+            <div key={book.key} className='flex gap-1 w-1/5 items-start flex-col hover:-translate-y-2 duration-300 hover:shadow-md hover:rounded-md'>
               <Card imageUrl={book.coverUrl} bookName={book.title}/>
               <span className='text-color pe-3 text-sm font-semibold ps-3 line-clamp-1'>
                 {book.title}
