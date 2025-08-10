@@ -4,9 +4,9 @@ import { LoginRegisterForm } from '../Importer'
 function Login() {
   return (
     <>
-      <div className='w-full h-screen flex justify-center px-5 lg:justify-between items-center gap-5'>
+      <div className='section-teriatory w-full h-screen flex justify-center px-5 lg:justify-between items-center gap-5'>
         <div className='w-0 lg:w-[65%] h-screen flex items-center overflow-hidden'>
-          <div className='h-[95vh] w-full bg-linear-to-br from-purple-500 to-red-400 rounded-2xl'>
+          <div className='h-[95vh] w-full bg-[url("../public/cover-1.avif")] bg-center bg-cover bg-linear-to-br from-purple-500 to-red-400 rounded-2xl'>
             
           </div>
         </div>
