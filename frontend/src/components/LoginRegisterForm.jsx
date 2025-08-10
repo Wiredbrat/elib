@@ -24,7 +24,7 @@ const LoginRegisterForm = () => {
     setAuthData(data)
 
     try {
-    const response = await axios.post(userRoutes.otp, data)
+    const response = await axios.post(userRoutes.otp, data, {withCredentials: true})
     if(response.data.statusCode === 200) {
       toast.success('OTP Sent!', {position: 'bottom-center'})
       navigate('/otp', )
@@ -51,7 +51,7 @@ const LoginRegisterForm = () => {
     
     console.log(payload.username)
     try {
-      const response = await axios.post(userRoutes.login, payload)
+      const response = await axios.post(userRoutes.login, payload, {withCredentials: true})
       console.log(response)
       if(response.data?.statusCode === 200) {
         toast.success('Welcome', {position: 'bottom-center'})
