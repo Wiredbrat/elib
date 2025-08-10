@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import './App.css'
+import './index.css'
 import { ThemeContext } from './context/ThemeContext'
 import { RouterProvider } from 'react-router-dom'
 import {router} from './layout/Layout.jsx'
@@ -10,7 +10,7 @@ function App() {
   
   return (
     <>
-      <div className='font-inter bg-slate-200 h-screen w-full'>
+      <div className={`font-inter h-screen w-full section-alt`}>
         <RouterProvider router={router}/>
       </div>
     </>

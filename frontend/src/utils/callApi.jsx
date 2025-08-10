@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 export default async function callApi(url, reqType = 'get', data = null) {
-  // const [response, setResponse] = useState()
 
   try {
     let response =
@@ -9,7 +8,7 @@ export default async function callApi(url, reqType = 'get', data = null) {
     ?await axios[reqType](url, data) 
     :await axios[reqType](url)
 
-    console.log(response)
+    // console.log(response)
     return { response } 
 
   } catch (error) {
