@@ -7,7 +7,11 @@ import { authRouter } from "./routes/auth.routes.js";
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+  origin: "http://localhost:5173", // frontend origin
+  credentials: true
+}))
+
 app.use(urlencoded())
 app.use(express.json())
 app.use(cookieParser())
