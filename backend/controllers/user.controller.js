@@ -91,8 +91,13 @@ const userLogin = asyncHandler(async(req, res) => {
     throw new ApiError(400, 'error while generating tokens')
   }
   const user = await User.findByIdAndUpdate(existingUser._id, {refreshToken: newRefreshToken}, {new:true, runValidators: false}).select('-password -refreshToken')
-
-  const options = {httpOnly: true, secure: process.env.NODE_ENV === "production"}
+  
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000 //7 days
+  }
 
   return res
   .status(200)
@@ -114,14 +119,18 @@ const userLogout = asyncHandler(async (req, res) => {
   // await loginUser.save()
   
   // method 2
-  console.log(req.user)
+  // console.log('userData', req.user)
   await User.findByIdAndUpdate(
     req.user?._id,
     {$unset: { refreshToken: 1 }},
     {new: true}
   )
 
-  const options = {httpOnly: true, secure: true, expires: new Date(0)}
+  const options = {
+    httpOnly: true,
+    secure: false,
+    expires: new Date(0)
+    }
 
   return res
   .cookie("accessToken", '', options)
