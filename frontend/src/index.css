@@ -41,10 +41,6 @@ html[data-theme="dark"] {
   box-sizing: border-box;
 }
 
-/* .dark{
-  background-color: var(--dark-mode);
-  color: white;
-} */
 
 .scrollbar-hide::-webkit-scrollbar{
   scrollbar-width: none;
