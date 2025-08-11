@@ -9,9 +9,9 @@ const validateToken = asyncHandler(async(req, _, next) => {
   // find the user and save it in req
 
   const token = req.cookies?.accessToken || req.header('authorization')?.replace('Bearer ', '') 
-  
+  // console.log("this is cookie", req.cookies)
   if(!token) {
-    throw new ApiError(401, "unauthorized User")
+    throw next(new ApiError(401, "unauthorized User"))
   }
 
   const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
