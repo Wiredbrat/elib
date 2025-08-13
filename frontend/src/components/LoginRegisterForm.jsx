@@ -56,6 +56,7 @@ const LoginRegisterForm = () => {
       if(response.data?.statusCode === 200) {
         toast.success('Welcome', {position: 'bottom-center'})
         navigate('/discover', {replace: true})
+        setAuthData(response.data?.data)
         return
       }else{
         toast.error('Invalid Credentials!', {position: 'bottom-center'})
