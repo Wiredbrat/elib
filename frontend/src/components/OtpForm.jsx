@@ -11,7 +11,7 @@ import { ThemeContext } from '../context/ThemeContext'
 import '../index.css'
 
 function OtpForm() {
-  const { authData} = useContext(AuthContext)
+  const { authData, setAuthData } = useContext(AuthContext)
   const { theme } = useContext(ThemeContext)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -42,7 +42,7 @@ function OtpForm() {
           console.log('Server Error', authResponse.data?.error || 500)
           navigate('/server-error')
         }
-
+        setAuthData(null)
       }else{
         toast.error('Invalid OTP!', {position: 'bottom-center'})
         console.log('Server Error', response.data?.error || 500)
