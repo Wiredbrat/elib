@@ -4,22 +4,18 @@ const ThemeContext = createContext(null)
 
 const ThemeProvider = ({children}) => {
   
-  const [theme, setTheme] = useState('light')
-  const html = document.documentElement
-  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-  if(systemTheme) {
-    localStorage.setItem('theme', 'dark')
-    theme === 'dark' ? html.setAttribute('data-theme', 'dark') :  html.removeAttribute('data-theme')
-  }else {
-    localStorage.setItem('theme', 'light')
-     html.removeAttribute('data-theme')
-  }
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
+    if(savedTheme) return savedTheme
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+    return systemTheme ? 'dark' : 'light'
+  })
   
   useEffect(() => {
-    const currTheme = localStorage.getItem('theme')
-    localStorage.setItem('theme', currTheme)
-    setTheme(currTheme)
-  }, [])
+    const html = document.documentElement
+    theme === 'dark' ? html.setAttribute('data-theme', 'dark') :  html.removeAttribute('data-theme')
+    localStorage.setItem('theme', theme)
+  }, [theme])
   
   return (
     <ThemeContext.Provider value={{theme, setTheme}}>
