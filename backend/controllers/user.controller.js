@@ -175,7 +175,7 @@ const changePassword = asyncHandler(async(req, res) => {
 
 // get user collection data 
 const getUserCollection = asyncHandler(async(req, res) => {
-  console.log(req.user._id)
+  // console.log(req.user._id)
   const user = await User.aggregate([
     {
       $match: {
@@ -209,7 +209,7 @@ const getUserCollection = asyncHandler(async(req, res) => {
     }
   ])
 
-  console.log(user)
+  // console.log(user)
   if(!user) {
     throw new ApiError(500, 'Error while fetching user')
   }
@@ -233,11 +233,24 @@ const deleteUserAccount = asyncHandler(async(req, res) => {
   .json(new ApiResponse(200, user, 'User Account Deleted Successfully'))
 })
 
+const getUser = asyncHandler(async(req, res) => {
+  const user = req.user
+  
+  if(!user) {
+    throw new ApiError(401, 'unauthorized user')
+  }
+  console.log(user)
+  return res
+  .status(200)
+  .json(new ApiResponse(200, user, 'User Fetched Successfully'))
+})
+
 export { 
   userRegister,
   userLogin,
   userLogout,
   changePassword,
   getUserCollection,
-  deleteUserAccount
+  deleteUserAccount,
+  getUser
 }

@@ -94,4 +94,8 @@ const deleteBookFromCollection = asyncHandler(async(req, res) => {
   .json(new ApiResponse(200, updatedUser.books,'Book Removed Successfully'))
 })
 
+const favoriteBooks = asyncHandler(async(req, res) => {
+  const {_id} = req.body
+})
+
 export { addBookToCollection, updateBookStatus, deleteBookFromCollection }
