@@ -1,5 +1,5 @@
 import Router from 'express'
-import { userLogin, userRegister, userLogout, changePassword, getUserCollection, deleteUserAccount } from '../controllers/user.controller.js'
+import { userLogin, userRegister, userLogout, changePassword, getUserCollection, deleteUserAccount, getUser } from '../controllers/user.controller.js'
 import { validateToken } from '../middlewares/auth.middleware.js'
 
 
@@ -14,5 +14,6 @@ router.route('/logout').post(validateToken ,userLogout)
 router.route('/change-password').post(validateToken, changePassword)
 router.route('/get-user/books').get(validateToken, getUserCollection)
 router.route('/delete-account').post(validateToken, deleteUserAccount)
+router.route('/get-user').get(validateToken, getUser)
 
 export { router }
