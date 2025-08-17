@@ -27,6 +27,7 @@ const fetchDataFromAPI = asyncHandler(async(req, res, next) => {
         author_name: book.author_name?.[0] || null,
         first_publish_year: book.first_publish_year || null,
         subjects: book.subject || [],
+        workKey: book.key,
         coverUrl: coverId
           ? `https://covers.openlibrary.org/b/olid/${coverId}-L.jpg?default=false`
           : null,
