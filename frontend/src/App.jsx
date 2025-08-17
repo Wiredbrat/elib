@@ -10,7 +10,7 @@ function App() {
   
   return (
     <>
-      <div className={`font-inter h-screen w-full section-alt`}>
+      <div className={`font-google-open-sans h-screen w-full section-alt`}>
         <RouterProvider router={router}/>
       </div>
     </>
