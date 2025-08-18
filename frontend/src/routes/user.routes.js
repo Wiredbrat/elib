@@ -3,8 +3,10 @@ const userRoutes = {
   register: 'http://localhost:8000/api/v1/user/register',
   otp: 'http://localhost:8000/api/v1/auth/send-otp',
   verifyOtp: 'http://localhost:8000/api/v1/auth/verify-otp',
-  getUser: 'http://localhost:8000/api/v1/user/get-user/books',
-  logout: 'http://localhost:8000/api/v1/user/logout'
+  getUserCollection: 'http://localhost:8000/api/v1/user/get-user/books',
+  logout: 'http://localhost:8000/api/v1/user/logout',
+  getUser: 'http://localhost:8000/api/v1/user/get-user',
+
 }
 
 export default userRoutes
