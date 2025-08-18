@@ -15,9 +15,12 @@ function Logout() {
       if(logout.status === 200) {
         navigate('/discover')
         setAuthData(null)
+        localStorage.setItem('authData', null)
+        sessionStorage.setItem('userData', null)
       }
     } catch (error) {
       console.log(error)
+      // navigate('/login')
     }
   }, [])
   return 
