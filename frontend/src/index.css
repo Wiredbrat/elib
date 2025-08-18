@@ -5,6 +5,7 @@
   --font-merriweather: 'Merriweather', serif;
   --font-lora: 'Lora', serif;
   --font-sans3: 'Source Sans 3', sans-serif;
+  --font-google-open-sans: "Google Sans Code", monospace;
 }
 
 
@@ -12,11 +13,12 @@
   --color-bg: #ffffff;
   --color-bg-alt: #eaeaea;
   --color-bg-teriatory: #f6f6f6;
+  --color-bg-next: #071032;
   --color-text: #222831;
   --color-text-alt: #646c76;
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
-  --color-secondary: #2f4e4e;
+  --color-secondary: #4e8383;
   --color-accent: #10b981;
   --color-border: #e5e7eb;
   --border: 1px;
@@ -26,6 +28,7 @@ html[data-theme="dark"] {
   --color-bg: #0f172a;
   --color-bg-alt: #1e293b;
   --color-bg-teriatory: #1b1b1b;
+  --color-bg-next: #131d42;
   --color-text: rgb(234, 234, 234);
   --color-text-alt: #9ca3af;
   --color-primary: #60a5fa;
@@ -52,6 +55,7 @@ html[data-theme="dark"] {
   background-color: var(--color-primary);
   color: white;
   transition-duration: 200ms;
+  cursor: pointer;
 }
 
 .section{
@@ -86,7 +90,20 @@ html[data-theme="dark"] {
   /* transition-duration: 200ms; */
 }
 
-.input{
+.input {
   background-color: var(--color-bg-alt);
   border:var(--border);
+}
+
+.isFavorite {
+  color: rgb(255, 84, 84);
+}
+
+.toggler {
+  color: var(--color-text);
+  border: 0px solid var(--color-text)
+}
+
+.bookDetails {
+  background-color: var(--color-bg-next);
 }
