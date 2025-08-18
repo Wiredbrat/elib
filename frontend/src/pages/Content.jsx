@@ -3,11 +3,14 @@ import { Books } from '../Importer'
 
 function Content() {
   return (
-    <div className='absolute w-full md:w-[79%] top-20 right-2 bottom-2 overflow-auto scrollbar-hide'>
+    <div className='absolute w-full md:w-[69%] lg:w-[79%] top-20 md:right-2 bottom-2 overflow-auto scrollbar-hide'>
       <div className={`grid grid-flow-row gap-4 h-auto `}>
         <Books category={'popular'}/>
-        <Books category={'english'}/>
-        <Books category={'recommended'}/>
+        <Books category={'science'}/>
+        <Books category={'novel'}/>
+        <Books category={'crime'}/>
+        <Books category={'drama'}/>
+        <Books category={'finance'}/>
       </div>
     </div>
   )
