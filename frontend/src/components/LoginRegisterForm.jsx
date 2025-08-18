@@ -6,6 +6,7 @@ import userRoutes from '../routes/user.routes'
 import { motion, AnimatePresence } from "motion/react"
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
+import { FaArrowRightLong } from "react-icons/fa6";
 
 
 const LoginRegisterForm = () => {
@@ -57,6 +58,7 @@ const LoginRegisterForm = () => {
         toast.success('Welcome', {position: 'bottom-center'})
         navigate('/discover', {replace: true})
         setAuthData(response.data?.data)
+        localStorage.setItem('authData', JSON.stringify(user.data.data))  
         return
       }else{
         toast.error('Invalid Credentials!', {position: 'bottom-center'})
@@ -215,6 +217,14 @@ const LoginRegisterForm = () => {
               </form>
               <p className='text-center my-5'>
                 <Link className="text-blue-600" to='/reset-password'>Forgot password?</Link>
+              </p>
+              <p className='text-color text-center my-5 rounded-md py-3 duration-150  cursor-pointer'>
+                <Link to='/discover' className='group inline-block'>
+                  Enter without Login 
+                  <span className='inline-block group-hover:scale-[1.1] duration-150 group-hover:translate-x-1'>
+                    <FaArrowRightLong />
+                  </span>
+                </Link>
               </p>
             </motion.div>
           }
