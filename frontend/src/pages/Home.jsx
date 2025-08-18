@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
-import { Searchbar, Sidebar } from '../Importer'
+import { BookDetails, Searchbar, Sidebar } from '../Importer'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
-  const [isTrue, setIsTrue] = useState(false)
+  const [isSideBarTrue, setIsSideBarTrue] = useState(false)
+  const navigate = useNavigate()
+  const handleUser = () => {
+    navigate('/user')
+  }
   return (
     <>
-      <Searchbar onClick={() => setIsTrue(prev => !prev)}/>
-      <Sidebar isSidebarVisible={isTrue}/>
+      
+      <Searchbar onClick={() => setIsSideBarTrue(prev => !prev)} handleUser={handleUser}/>
+      <Sidebar isSidebarVisible={isSideBarTrue}/>
+      <BookDetails/>
     </>
   )
 }
