@@ -22,9 +22,7 @@ const bookSchema = new Schema({
     type: String,
     lowercase: true
   }],
-  favorite: {
-    type: Boolean
-  }  
+    
 }, {timestamps: true})
 
 export const Book = mongoose.model('Book', bookSchema)

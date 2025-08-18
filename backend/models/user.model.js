@@ -30,15 +30,19 @@ const userSchema = new Schema({
   },
   books: [{
     book: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Book'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Book'
     },
     status: {
-    type: String,
-    enum: ['Reading', 'Plan to read', 'On hold', 'Completed', 'Dropped'],
-    required: true,
-    default: 'Plan to read'
+      type: String,
+      enum: ['Reading', 'Plan to read', 'On hold', 'Completed', 'Dropped'],
+      required: true,
+      default: 'Plan to read'
     },
+    favorite: {
+      type: Boolean,
+      default: false
+    }
   }]
 }, {timestamps: true})
 
