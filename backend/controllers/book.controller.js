@@ -96,10 +96,56 @@ const deleteBookFromCollection = asyncHandler(async(req, res) => {
   .json(new ApiResponse(200, updatedUser.books,'Book Removed Successfully'))
 })
 
-const favoriteBooks = asyncHandler(async(req, res) => {
+const setfavoriteBook = asyncHandler(async(req, res) => {
   const {_id} = req.body
 
+  if(!mongoose.Types.ObjectId.isValid(_id)) {
+    throw new ApiError(404, 'No such book found in user data')
+  } 
+
+  const updatedUser = await User.findByIdAndUpdate(
+    {_id: req.user._id, "books._id": new mongoose.Types.ObjectId(_id) },
+    {$set: {"books.$.favorite": true}},
+    {new: true}
+  )
+
+  if(!updatedUser) {
+    throw new ApiError(500, 'Error while updating User')
+  }
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, updatedUser, 'Book set to favorite'))
   
 })
 
-export { addBookToCollection, updateBookStatus, deleteBookFromCollection }
+const deleteFavoriteBook = asyncHandler(async (req, res) => {
+  const {_id} = req.body
+
+  if(!mongoose.Types.ObjectId.isValid(_id)) {
+    throw new ApiError(404, 'No such book found in user data')
+  } 
+
+  const updatedUser = await User.findByIdAndUpdate(
+    {_id: req.user._id, "books._id": new mongoose.Types.ObjectId(_id) },
+    {$set: {"books.$.favorite": false}},
+    {new: true}
+  )
+
+  if(!updatedUser) {
+    throw new ApiError(500, 'Error while updating User')
+  }
+
+  return res
+  .status(200)
+  .json(new ApiResponse(200, updatedUser, 'Book removed from favorite'))
+
+})
+
+export { 
+  addBookToCollection,
+  updateBookStatus, 
+  deleteBookFromCollection, 
+  setfavoriteBook, 
+  deleteFavoriteBook 
+}
