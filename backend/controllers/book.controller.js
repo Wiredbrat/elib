@@ -7,9 +7,9 @@ import mongoose from "mongoose";
 
 const addBookToCollection = asyncHandler(async(req, res) => {
 
-  const bookDetails = req.body//change it after integrating external api
+  const { bookDetails } = req.body//change it after integrating external api
 
-  console.log(bookDetails.data.key)
+  console.log(bookDetails?.data.key)
   if(!bookDetails) {
     throw new ApiError(400, 'invalid book data')
   }
@@ -17,15 +17,17 @@ const addBookToCollection = asyncHandler(async(req, res) => {
   let book = await Book.findOne({bookId: bookDetails.data.key})
   if(!book) {
     book = await Book.create({
-    bookName: bookDetails.data?.title,
-    author: bookDetails.data?.author_name, 
-    publishYear: bookDetails.data?.first_publish_year,
-    status: 'Reading', //need to chnage when frontend is ready
+    bookName: bookDetails?.data?.title,
+    author: bookDetails?.author, 
+    publishYear: bookDetails?.data?.first_publish_year,
+    status: 'Plan To Read', //need to chnage when frontend is ready
     bookId: bookDetails.data?.key || "0",
-    bookCover: bookDetails.data?.cover_i || '0',
+    bookCover: bookDetails?.coverUrl || null,
     category: null, 
     
     })
+
+    // await User.updateMany({}, {$set: {favorite : false}}) 
 
     if(!book) {
       throw new ApiError(400, 'error while saving book to user collection')
@@ -96,6 +98,8 @@ const deleteBookFromCollection = asyncHandler(async(req, res) => {
 
 const favoriteBooks = asyncHandler(async(req, res) => {
   const {_id} = req.body
+
+  
 })
 
 export { addBookToCollection, updateBookStatus, deleteBookFromCollection }
