@@ -175,7 +175,7 @@ const changePassword = asyncHandler(async(req, res) => {
 
 // get user collection data 
 const getUserCollection = asyncHandler(async(req, res) => {
-  // console.log(req.user._id)
+  console.log(req.user._id)
   const user = await User.aggregate([
     {
       $match: {
@@ -183,7 +183,7 @@ const getUserCollection = asyncHandler(async(req, res) => {
       }
     },
     {
-      $unwind: '$books'
+      $unwind: {path: "$books", preserveNullAndEmptyArrays: true}
     },
     {
       $lookup: {
@@ -209,7 +209,7 @@ const getUserCollection = asyncHandler(async(req, res) => {
     }
   ])
 
-  // console.log(user)
+  console.log(user)
   if(!user) {
     throw new ApiError(500, 'Error while fetching user')
   }
