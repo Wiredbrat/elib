@@ -6,8 +6,8 @@ import { Otp } from '../models/otp.model.js'
 import ApiResponse from "./responseHandler.js";
 
 const sendOTP = asyncHandler(async(req, res) => {
+  console.log(req.body)
   const { email } = req.body
-
   if(!email) {
     throw new ApiError(400, 'enter a valid email')
   }
