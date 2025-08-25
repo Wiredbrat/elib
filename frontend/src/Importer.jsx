@@ -10,6 +10,8 @@ import Category from "./pages/Category";
 import Content from "./pages/Content";
 import Library from "./pages/Library";
 import Logout from "./pages/Logout";
+import Settings from "./pages/Settings";
+import Support from "./pages/Support";
 import User from "./pages/User";
 
 export { 
@@ -25,5 +27,7 @@ export {
   Logout, 
   BookDetails, 
   User,
-  ExploreBooks
+  ExploreBooks,
+  Settings,
+  Support
 }
