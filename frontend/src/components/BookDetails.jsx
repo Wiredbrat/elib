@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { BookContext } from '../context/BookContext'
 import { motion } from 'motion/react'
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { addBook } from '../utils/bookTasks'
 
 function BookDetails({}) {
   const [detailsOpen, setDetailsOpen] = useState(false)
@@ -12,8 +13,8 @@ function BookDetails({}) {
   
   useEffect(() => {
     if(bookData) {
-      console.log(bookData)
       setDetailsOpen(true)
+      console.log(bookData)
     }
   }, [bookData])
 
@@ -31,7 +32,7 @@ function BookDetails({}) {
   return (
     <div
       ref={bookRef} 
-      className={`bookDetails z-20 fixed w-full md:w-1/5 h-1/2 md:h-full md:top-0 md:bottom-0 ${ detailsOpen ? 'bottom-0 md:right-0': 'bottom-[-50%] md:right-[-20%]'} duration-200 shadow-md`}
+      className={`bookDetails z-20 fixed w-full md:w-[35%] lg:w-1/5 h-1/2 md:h-full md:top-0 md:bottom-0 ${ detailsOpen ? 'bottom-0 md:right-0': 'bottom-[-50%] md:right-[-35%] lg:right-[-20%]'} duration-200 shadow-md`}
     >
       <div className='mt-16 p-5 grid grid-cols-1'>
         <motion.div 
@@ -74,7 +75,7 @@ function BookDetails({}) {
           {bookData?.data?.description?.value || bookData?.data?.first_sentence?.value || 'Description not available'}
         </p>
         <button 
-          onClick={''} 
+          onClick={() => addBook(bookData)} 
           className='cursor-pointer mt-5 w-[90%] rounded-md hover:scale-[1.02] duration-200 text-sm mx-auto bg-blue-600 py-2 text-white flex justify-center items-center gap-2'
         >
           Plan to Read {<MdOutlineBookmarkAdd className='text-base'/>}
