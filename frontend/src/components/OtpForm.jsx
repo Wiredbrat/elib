@@ -86,7 +86,7 @@ function OtpForm() {
             <input 
             type="submit" 
             value="Verify"
-            className='bg-[var(--button)] text-[var(--primary)] rounded-md py-3 shadow hover:scale-[1.01] duration-150 active:scale-[0.99] cursor-pointer'
+            className='button rounded-md py-3 shadow hover:scale-[1.01] duration-150 active:scale-[0.99] cursor-pointer'
             />
             
           </form>
