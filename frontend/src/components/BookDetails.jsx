@@ -32,23 +32,23 @@ function BookDetails({}) {
   return (
     <div
       ref={bookRef} 
-      className={`bookDetails z-20 fixed w-full md:w-[35%] lg:w-1/5 h-1/2 md:h-full md:top-0 md:bottom-0 ${ detailsOpen ? 'bottom-0 md:right-0': 'bottom-[-50%] md:right-[-35%] lg:right-[-20%]'} duration-200 shadow-md`}
+      className={`bookDetails z-20 fixed w-full md:w-[35%] lg:w-1/5 h-[90%] md:h-full md:top-0 md:bottom-0 ${ detailsOpen ? 'bottom-0 md:right-0': 'bottom-[-90%] md:right-[-35%] lg:right-[-20%]'} duration-200 shadow-md`}
     >
-      <div className='mt-16 p-5 grid grid-cols-1'>
+      <div className='md:mt-16 p-5 grid grid-cols-1'>
         <motion.div 
           initial={{opacity: 0, y: 20}}
           animate={{opacity:1, y: 0, transition: {duration: 0.3}}}
-          className={`bg-blue-300 relative rounded-md px-3 mx-auto py-4 m-2 w-3/4 shadow-md`}
+          className={`bg-blue-300 relative rounded-md px-3 mx-auto py-4 m-2 w-[60%] md:w-3/4 shadow-md`}
         >
           <img 
-          className='h-46 w-[90%] object-fill mx-auto outline-0'
+          className='md:h-46 w-[90%] object-fill mx-auto outline-0'
           src={bookData?.coverUrl} 
           alt="" 
           />
         </motion.div>
         <h3 className='text-center text-white font-semibold text-[15px] line-clamp-2'>{bookData?.data.title}</h3>
         <p className='text-[13px] text-blue-200 mt-1 mx-auto'>{bookData?.author}</p>
-        <p className='mx-4 text-blue-200 text-sm flex gap-5 mt-3'>
+        <p className='mx-auto text-blue-200 text-sm flex gap-5 mt-3'>
           <span className='flex flex-col py-1 justify-center items-center'>
             <span className='mx-auto inline-block'>
               {bookData?.rating?.summary?.average
