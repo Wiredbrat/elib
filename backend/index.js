@@ -8,7 +8,7 @@ import { authRouter } from "./routes/auth.routes.js";
 const app = express()
 
 app.use(cors({
-  origin: "http://localhost:5173", // frontend origin
+  origin: "https://elib-rary.vercel.app/", // frontend origin
   credentials: true
 }))
 
