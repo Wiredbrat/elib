@@ -11,21 +11,29 @@ function Library() {
     ;(async() => {
     
       try {
-          const user = await axios.get(userRoutes.getUser, {withCredentials: true})
+          const user = await axios.get(userRoutes.getUserCollection, {withCredentials: true})
           console.log(user.status)
           if(user.status !== 200) {
             navigate('/login')
           }
-          setUserData(user)
-          console.log(userData)
-        
-      } catch (error) {
-        
-      }
-  })() 
+          setUserData(user.data)
+          console.log(user)
+          
+        } catch (error) {
+          console.log(error)
+        }
+    })() 
   }, [])
+  
+  // console.log(userData)
   return (
-    <div></div>
+    <div className='absolute w-full md:w-[69%] lg:w-[79%] top-20 md:right-2 bottom-2 overflow-auto scrollbar-hide'>
+      <div className={`grid grid-flow-row gap-4 h-auto mx-5`}>
+      {userData?.length === 0 ?
+      <div>{userData}</div> 
+      :<div className='text-color'>There is no book in your library...</div> }
+      </div>
+    </div>
   )
 }
 
