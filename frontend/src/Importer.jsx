@@ -3,7 +3,7 @@ import { lazy } from "react";
 
 export const OtpForm = lazy(() => import("./components/OtpForm"));
 export const LoginRegisterForm = lazy(() => import("./components/LoginRegisterForm"));
-export const Searchbar = lazy(() => import("./components/searchbar"));
+export const Searchbar = lazy(() => import("./components/Searchbar"));
 export const Sidebar = lazy(() => import("./components/Sidebar"));
 export const Books = lazy(() => import("./components/Books"));
 export const Card = lazy(() => import("./components/Card"));
