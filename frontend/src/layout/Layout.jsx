@@ -3,9 +3,15 @@ import { OtpForm, Content, Library, Category, Logout, BookDetails, User, Explore
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import { Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-Login
 function Layout() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate("/discover")
+  })
   return (
     <>
       <Home/>
