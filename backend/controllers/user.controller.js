@@ -175,41 +175,45 @@ const changePassword = asyncHandler(async(req, res) => {
 
 // get user collection data 
 const getUserCollection = asyncHandler(async(req, res) => {
-  console.log(req.user._id)
-  const user = await User.aggregate([
-    {
-      $match: {
-        _id: req.user._id
-      }
-    },
-    {
-      $unwind: {path: "$books", preserveNullAndEmptyArrays: true}
-    },
-    {
-      $lookup: {
-        from: 'books',
-        localField: 'books.book',
-        foreignField: '_id',
-        as: 'bookData',
-      }
-    },
-    {
-      $unwind: '$bookData'
-    },
-    {
-      $project: {
-        _id: 1,
-        title: '$bookData.bookName',
-        author: '$bookData.author',
-        cover: '$bookData.bookCover',
-        publishYear: '$bookData.publishYear',
-        status: '$books.status',  
-        bookId: '$bookData._id'
-      }
-    }
-  ])
+  // console.log(req.user._id)
+  // const user = await User.aggregate([
+  //   {
+  //     $match: {
+  //       _id: req.user._id
+  //     }
+  //   },
+  //   {
+  //     $unwind: {path: "$books", preserveNullAndEmptyArrays: true}
+  //   },
+  //   {
+  //     $lookup: {
+  //       from: 'books',
+  //       localField: 'books.book',
+  //       foreignField: '_id',
+  //       as: 'bookData',
+  //     }
+  //   },
+  //   {
+  //     $unwind: '$bookData'
+  //   },
+  //   {
+  //     $project: {
+  //       _id: 1,
+  //       title: '$bookData.bookName',
+  //       author: '$bookData.author',
+  //       cover: '$bookData.bookCover',
+  //       publishYear: '$bookData.publishYear',
+  //       status: '$books.status',  
+  //       bookId: '$bookData._id'
+  //     }
+  //   }
+  // ])
 
-  console.log(user)
+  const user = await User.findById(req.user._id).populate({
+    path: "books.book",
+    model: "Book"
+  }).lean().exec()
+  
   if(!user) {
     throw new ApiError(500, 'Error while fetching user')
   }
@@ -239,7 +243,7 @@ const getUser = asyncHandler(async(req, res) => {
   if(!user) {
     throw new ApiError(401, 'unauthorized user')
   }
-  console.log(user)
+  // console.log(user)
   return res
   .status(200)
   .json(new ApiResponse(200, user, 'User Fetched Successfully'))
