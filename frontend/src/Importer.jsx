@@ -8,7 +8,7 @@ export const Sidebar = lazy(() => import("./components/Sidebar"));
 export const Books = lazy(() => import("./components/Books"));
 export const Card = lazy(() => import("./components/Card"));
 export const BookDetails = lazy(() => import("./components/BookDetails"));
-export const ExploreBooks = lazy(() => import("./components/exploreBooks"));
+export const ExploreBooks = lazy(() => import("./components/ExploreBooks"));
 
 export const Content = lazy(() => import("./pages/Content"));
 export const Library = lazy(() => import("./pages/Library"));
