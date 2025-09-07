@@ -10,6 +10,7 @@ import { LuNotebook } from "react-icons/lu";
 import { LuDoorOpen } from "react-icons/lu";
 import { PiChatsCircle } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FaRegUserCircle } from "react-icons/fa";
 
 function Sidebar({isSidebarVisible}) {
   const { theme, setTheme } = useContext(ThemeContext)
@@ -39,7 +40,9 @@ function Sidebar({isSidebarVisible}) {
         className={`section z-[2000] pt-3 pb-3 md:pb-12 flex flex-col justify-between h-screen w-[50%] md:w-[30%] lg:w-1/5 shadow-lg absolute top-0 ${isSidebarVisible? 'left-0' : 'left-[-80%]'} md:left-0 duration-200 ease-out`}
       >
         <div className='md:mx-12 mx-6'> 
-          <span className='inline-block py-2 mb-12 bg-gradient-to-r from-red-400 to-purple-300 bg-clip-text text-transparent font-bold md:text-xl lg:text-2xl'>E-Library</span>
+          <Link to='/discover' className='inline-block py-2 mb-12 bg-gradient-to-r from-red-400 to-purple-300 bg-clip-text text-transparent font-bold md:text-xl lg:text-2xl'>
+            E-Library
+          </Link>
 
           <ul className={`text-color flex flex-col gap-4`}>
             <li >
@@ -86,13 +89,13 @@ function Sidebar({isSidebarVisible}) {
               // onClick={}
               >
                 <span className='section-alt p-[6px] rounded-md'>
-                  <IoSettingsOutline/> 
+                  <FaRegUserCircle/>
                 </span>
                 User
               </Link>
             </li>
             <li>
-              <Link to='' className='flex items-center gap-1 hover:-translate-y-[2px] duration-200 hover:scale-[1.03]'>
+              <Link to='/user/settings' className='flex items-center gap-1 hover:-translate-y-[2px] duration-200 hover:scale-[1.03]'>
                 <span className='section-alt p-[6px] rounded-md'>
                   <IoSettingsOutline/> 
                 </span>
@@ -100,7 +103,7 @@ function Sidebar({isSidebarVisible}) {
               </Link>
             </li>
             <li>
-              <Link to='' className='flex items-center gap-1 hover:-translate-y-[2px] duration-200 hover:scale-[1.03]'>
+              <Link to='/support' className='flex items-center gap-1 hover:-translate-y-[2px] duration-200 hover:scale-[1.03]'>
                 <span className='section-alt p-[6px] rounded-md'>
                   <PiChatsCircle/> 
                 </span>
