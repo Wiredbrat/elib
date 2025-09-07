@@ -37,11 +37,9 @@ const addBookToCollection = asyncHandler(async(req, res) => {
 
   const updatedUser = await User.findByIdAndUpdate(
     req.user._id,
-    {$addToSet: { books: book._id }},
+    {$addToSet: { books: {book: book._id} }},
     {new: true}
   )
-
-
 
   return res
   .status(200)
