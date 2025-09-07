@@ -10,7 +10,7 @@ function Logout() {
   const { setAuthData } = useContext(AuthContext)
   useEffect(() => async() => {
     try {
-      const logout = await axios.post('http://localhost:8000/api/v1/user/logout', {}, {withCredentials: true})
+      const logout = await axios.post('https://elib-4gnk.onrender.com/api/v1/user/logout', {}, {withCredentials: true})
       
       if(logout.status === 200) {
         navigate('/discover')
