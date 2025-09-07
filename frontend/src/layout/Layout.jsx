@@ -11,7 +11,7 @@ function Layout() {
 
   useEffect(() => {
     navigate("/discover")
-  })
+  }, [])
   return (
     <>
       <Home/>
