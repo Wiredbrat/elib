@@ -26,7 +26,7 @@ function Searchbar({onClick, handleUser}) {
       setLoading(true) 
       setSearchOpen(true)
       setError(false)
-      const searchResult = await axios.get(`http://localhost:8000/api/v1/books/search`, {
+      const searchResult = await axios.get(`https://elib-4gnk.onrender.com/api/v1/books/search`, {
         params: {
           title: title,
           limit: 8
@@ -152,7 +152,7 @@ function Searchbar({onClick, handleUser}) {
           className='rounded-full overflow-hidden hidden md:block md:h-10 aspect-square bg-blue-100 cursor-pointer'
           onClick={handleUser}
         >
-            <img src="../../public/avatar/avatar-male.png" alt="" />
+            <img src="/avatar/avatar-male.png" alt="" />
         </div>
         </div>
 
