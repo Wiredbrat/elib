@@ -8,6 +8,8 @@ function Category() {
         <Books category={'thriller'}/>
         <Books category={'romance'}/>
         <Books category={'manga'}/>
+        <Books category={'hot'}/>
+        <Books category={'fantasy'}/>
       </div>
     </div>
   )
