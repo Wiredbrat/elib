@@ -39,6 +39,7 @@ function Card({imageUrl, bookName, bookId, workKey}) {
         className='h-48 w-36 object-fill'
         src={imageUrl} 
         alt={bookName} 
+        loading='lazy'
         />
       </Link>
     </motion.div>
