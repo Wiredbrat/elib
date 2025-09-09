@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { motion } from 'motion/react'
-import callApi from '../utils/callApi'
 import { AuthContext } from '../context/AuthContext'
 import userRoutes from '../routes/user.routes'
 import { useNavigate } from 'react-router-dom'
@@ -30,7 +29,7 @@ function OtpForm() {
     }
     try {
       console.log("Submitted Data", data)
-      const response = await callApi(userRoutes.verifyOtp, sendData)
+      const response = await axios.post(userRoutes.verifyOtp, sendData, {withCredentials: true})
       console.log(response.data)
       
       if(response.data?.statusCode === 200) {
