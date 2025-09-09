@@ -35,7 +35,7 @@ function OtpForm() {
       
       if(response.data?.statusCode === 200) {
         toast.success('OTP Verified!', {position: 'bottom-center'})
-        const authResponse = await callApi(userRoutes.register, 'post', authData)
+        const authResponse = await axios.post(userRoutes.register, authData, {withCredentials: true})
         if(authResponse.data?.statusCode === 200) {
           navigate('/login')
         }else{
