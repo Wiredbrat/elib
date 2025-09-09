@@ -5,8 +5,8 @@ export default async function callApi(url, reqType = 'get', data = null) {
   try {
     let response =
     reqType === 'post' 
-    ?await axios[reqType](url, data) 
-    :await axios[reqType](url)
+    ?await axios[reqType](url, data, {withCredentials: true}) 
+    :await axios[reqType](url, {withCredentials: true})
 
     // console.log(response)
     return { response } 
