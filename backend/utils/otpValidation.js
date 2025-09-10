@@ -4,6 +4,30 @@ import otpGenerator from 'otp-generator'
 import nodemailer from 'nodemailer'
 import { Otp } from '../models/otp.model.js'
 import ApiResponse from "./responseHandler.js";
+import { User } from "../models/user.model.js";
+
+
+const isEmail = (value) => {
+  // Simple regex to validate email
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+};
+
+const isValidUser = asyncHandler(async(req, _, next)=> {
+  const { email } = req.body
+
+  if(!email || !isEmail(email)) {
+    throw new ApiError(400, 'enter a valid email')
+  }
+
+  const user = await User.find({email: email})
+
+  if(!user) {
+    throw new ApiError(404, "user not found")
+  }
+
+  next()
+
+})
 
 const sendOTP = asyncHandler(async(req, res) => {
   console.log(req.body)
@@ -79,5 +103,5 @@ const verifyOTP = asyncHandler(async(req, res) => {
   .json(new ApiResponse(200, '', 'Email Verified'))
 })
 
-export { sendOTP, verifyOTP}
+export { isValidUser, sendOTP, verifyOTP}
 
