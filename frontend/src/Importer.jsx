@@ -18,6 +18,7 @@ export const NotFound = lazy(() => import("./pages/NotFound"));
 export const Settings = lazy(() => import("./pages/Settings"));
 export const Support = lazy(() => import("./pages/Support"));
 export const User = lazy(() => import("./pages/User"));
+export const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 
 // import BookDetails from "./components/BookDetails";
 // import Books from "./components/Books";
