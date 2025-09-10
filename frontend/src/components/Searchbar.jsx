@@ -145,14 +145,14 @@ function Searchbar({onClick, handleUser}) {
             className='userButton overflow-hidden rounded-md h-8 md:hidden aspect-square bg-blue-100 cursor-pointer'
             onClick={onClick}
           >
-            <img src="../../public/avatar/avatar-male.png" alt="" />
+            <img src="public/avatar/avatar-male.png" alt="User Avatar" />
           </div>
           
         <div 
           className='rounded-full overflow-hidden hidden md:block md:h-10 aspect-square bg-blue-100 cursor-pointer'
           onClick={handleUser}
         >
-            <img src="/avatar/avatar-male.png" alt="avatar" />
+            <img src="/avatar/avatar-male.png" alt="User Avatar" />
         </div>
         </div>
 
