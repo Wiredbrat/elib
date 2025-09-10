@@ -36,7 +36,7 @@ function User() {
       <div className={`grid grid-flow-row gap-4 h-auto mx-5`}>
         <div className='flex flex-col md:flex-row items-center gap-6'>
           <div className='w-28 md:w-24 lg:w-32 aspect-auto rounded-full overflow-hidden bg-blue-200'>
-            <img src="/public/avatar/avatar-male.png" alt="User Avatar" />
+            <img src="/avatar/avatar-male.png" alt="User Avatar" />
           </div>
           <h2 className='text-color font-semibold text-2xl'>{userData?.username}</h2>
         </div>
