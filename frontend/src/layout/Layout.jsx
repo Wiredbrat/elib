@@ -1,5 +1,5 @@
 import { createBrowserRouter, createRoutesFromElements, Outlet, Route } from 'react-router-dom'
-import { OtpForm, Content, Library, Category, Logout, BookDetails, User, ExploreBooks, Settings, Support, NotFound } from '../Importer'
+import { OtpForm, Content, Library, Category, Logout, BookDetails, User, ExploreBooks, Settings, Support, NotFound, ForgotPassword } from '../Importer'
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import { Suspense } from 'react';
@@ -41,6 +41,7 @@ const router = createBrowserRouter(
     <Route path='/login' element={<Login/>}/>
     <Route path='/otp' element={<OtpForm/>}/>
     <Route path='/logout' element={<Logout/>}/>
+    <Route path='/reset-password' element={<ForgotPassword/>}/>
     </>
   )
 )
