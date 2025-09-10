@@ -18,9 +18,10 @@ function Logout() {
         localStorage.setItem('authData', null)
         sessionStorage.setItem('userData', null)
       }
+      
     } catch (error) {
       console.log(error)
-      // navigate('/login')
+      navigate('/login')
     }
   }, [])
   return 
